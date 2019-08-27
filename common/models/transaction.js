@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function(Customer) {
-    Customer.remoteMethod(
+module.exports = function(Transaction) {
+    Transaction.remoteMethod(
         'getId',
         {
             description: 'get Id',
@@ -15,9 +15,9 @@ module.exports = function(Customer) {
         }
     );
 
-    Customer.getId = function(id, callback){
+    Transaction.getId = function(id, callback){
         new Promise(function(resolve, reject){
-            Customer.findById(id, function(err, result){
+            Transaction.findById(id, function(err, result){
                 if(err) reject (err)
                 if(result === null){
                     err = new Error ("Nama Tidak Dapat Ditemukan")
@@ -33,31 +33,31 @@ module.exports = function(Customer) {
             callback(err);
         });
     }
-   
-    Customer.remoteMethod(
-        'getNameAde',
+    
+    Transaction.remoteMethod(
+        'getName',
         {
-            description: 'get name like -> Ade',
+            description: 'get name',
             accepts: [
-                { arg: 'firstname', type: 'string'}
+                { arg: 'name', type: 'string'}
             ],
             returns:{
                 arg: 'res', type:'object', root: true
             },
-            http: { path: '/getNameAde', verb: 'get' }
+            http: { path: '/getName', verb: 'get' }
         }
     );
 
-    Customer.getFirstname = function(firstname, callback){
+    Transaction.getName = function(name, callback){
         new Promise(function(resolve, reject){
             var filter = {
                 where: {
-                    firstname : {
-                        like : firstname
+                    name : {
+                        like : name
                     }
                 }
             }
-            Customer.find(filter, function(err, result){
+            Transaction.find(filter, function(err, result){
                 if(err) reject (err)
                 if(result === null){
                     err = new Error ("Nama Tidak Dapat Ditemukan")
@@ -74,30 +74,67 @@ module.exports = function(Customer) {
         });
     }
 
-    Customer.remoteMethod(
-        'getLastName',
+    Transaction.remoteMethod(
+        'getQuantity',
         {
-            description: 'get last name like -> Mahpudin',
+            description: 'get quantity',
             accepts: [
-                { arg: 'lastname', type: 'string'}
+                { arg: 'quantity', type: 'string'}
             ],
             returns:{
                 arg: 'res', type:'object', root: true
             },
-            http: { path: '/getLastName', verb: 'get' }
-        }
-    );
+            http: { path: '/getQuantity', verb: 'get' }
+        });
 
-    Customer.getLastName = function(lastname, callback){
+    Transaction.getItem = function(item, callback){
         new Promise(function(resolve, reject){
             var filter = {
                 where: {
-                    last_name : {
-                        like : lastname
+                    item: {
+                        like : item
                     }
                 }
             }
-            Customer.find(filter, function(err, result){
+            Transaction.find(filter, function(err, result){
+                if(err) reject (err)
+                if(result === null){
+                    err = new Error ("Email Tidak Dapat Ditemukan")
+                    err.statusCode = 404
+                    reject (err)
+                }
+                resolve(result)
+            })
+        }).then(function(res){
+            if (!res) callback (err)
+            return callback (null, res)
+        }).catch(function(err){
+            callback(err);
+        });
+
+    Transaction.remoteMethod(
+        'category',
+        {
+            description: 'get category',
+            accepts: [
+                { arg: 'Category', type: 'string'}
+            ],
+            returns:{
+                arg: 'res', type:'object', root: true
+            },
+            http: { path: '/getCategory', verb: 'get' }
+        });
+
+    Transaction.getCategory = function(category, callback){
+        new Promise(function(resolve, reject){
+            var filter = {
+                where: {
+                    category : {
+                        like : category
+                    }
+                }
+            }
+            Transaction.find(filter, function(err, result){
                 if(err) reject (err)
                 if(result === null){
                     err = new Error ("Nama Akhir Tidak Dapat Ditemukan")
@@ -114,30 +151,29 @@ module.exports = function(Customer) {
         });
     }
 
-    Customer.remoteMethod(
-        'getEmail',
+    Transaction.remoteMethod(
+        'getQuantity',
         {
-            description: 'get email like -> mahpudeen@gmail.com',
+            description: 'get quantity',
             accepts: [
-                { arg: 'email', type: 'string'}
+                { arg: 'quantity', type: 'string'}
             ],
             returns:{
                 arg: 'res', type:'object', root: true
             },
-            http: { path: '/getEmail', verb: 'get' }
-        }
-    );
+            http: { path: '/getQuantity', verb: 'get' }
+        });
 
-    Customer.getEmail = function(email, callback){
+    Transaction.getQuantity = function(password, callback){
         new Promise(function(resolve, reject){
             var filter = {
                 where: {
-                    email_address : {
-                        like : email
+                    quantity: {
+                        like : quantity
                     }
                 }
             }
-            Customer.find(filter, function(err, result){
+            Transaction.find(filter, function(err, result){
                 if(err) reject (err)
                 if(result === null){
                     err = new Error ("Email Tidak Dapat Ditemukan")
@@ -152,7 +188,7 @@ module.exports = function(Customer) {
         }).catch(function(err){
             callback(err);
         });
-
-
     }
+}
+
 };

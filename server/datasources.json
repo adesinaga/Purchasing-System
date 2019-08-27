@@ -3,24 +3,21 @@
     "name": "db",
     "connector": "memory"
   },
-  
-  "mysql" : {
+  "mysql": {
     "host": "localhost",
     "port": 3306,
     "database": "my_db",
     "username": "root",
     "password": "",
     "name": "mysql",
-    "connector":"mysql"
+    "connector": "mysql"
   },
-
-  "mongodb" : {
-"database " : "my_db",
-"name" : "mongodb",
-"connector" : "mongodb" ,
-"port":27017, 
-"extends_operators" : true,
-"allowExtendedOperator"  : true
-
+  "mongodb": {
+    "port": 27017,
+    "name": "mongodb",
+    "database ": "test",
+    "connector": "mongodb",
+    "extends_operators": true,
+    "allowExtendedOperator": true
   }
 }
